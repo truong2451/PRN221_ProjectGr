@@ -28,6 +28,8 @@ mongoose.connection.on("error", (err) => {
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const blogRoutes = require("./routes/blog");
+const categoryRoutes = require("./routes/category");
+const productRoutes = require("./routes/product");
 
 const options = {
   definition: {
@@ -70,6 +72,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", blogRoutes);
+app.use("/api", categoryRoutes);
+app.use("/api", productRoutes);
 
 app.use(function (err, req, res, next) {
   if (err.name === "UnauthorizedError") {

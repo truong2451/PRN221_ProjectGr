@@ -1,11 +1,14 @@
 const express = require("express");
 const controllersProduct = require("../controllers/product");
+const {verifyAccessTokenCookie} = require("../controllers/token");
+const { requireSignIn } = require("../controllers/auth");
+const { checkRole } = require("../controllers/auth");
 const router = express.Router();
 
 router.get('/product', controllersProduct.allProducts);
-router.get('/product/:productName', controllersProduct.getProductsByName);
-router.post('/product/:productId', controllersProduct.addProduct);
-router.put('/product/:productId', controllersProduct.updateProduct);
-router.delete('/product/:productId', controllersProduct.deleteProduct);
+router.get('/product/:productID', controllersProduct.getProductById);
+router.post('/product',verifyAccessTokenCookie, controllersProduct.addProduct);
+router.put('/product/:productID',verifyAccessTokenCookie, controllersProduct.updateProduct);
+router.delete('/product/:productID',verifyAccessTokenCookie, controllersProduct.deleteProduct);
 
 module.exports = router;
