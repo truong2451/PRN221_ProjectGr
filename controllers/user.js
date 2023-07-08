@@ -77,7 +77,7 @@ exports.getUserById = async (req, res) => {
 
 
 exports.createUser = async (req, res, next) => {
-  const userExists = await User.findOne({ name: req.body.name });
+  const userExists = await User.findOne({ userName: req.body.userName });
   if (userExists)
     return res.status(403).json({
       message: "Username is taken!",
