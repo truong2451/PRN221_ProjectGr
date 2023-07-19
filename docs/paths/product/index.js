@@ -1,4 +1,4 @@
-const getProductsByName = require("./getProductsByName");
+const searchProducts = require("./searchProducts");
 const getProductById = require("./getProductById");
 const allProducts = require("./allProduct");
 const addProduct = require("./addProduct");
@@ -6,10 +6,12 @@ const updateProduct = require("./updateProduct");
 const deleteProduct = require("./deleteProduct");
 
 module.exports = {
-  "/product": {
+  "/products": {
     ...allProducts,
+  },
+  "/product": {
     ...addProduct,
-    // ...getProductsByName,
+    ...searchProducts,
   },
   "/product/{productID}": {
     ...updateProduct,

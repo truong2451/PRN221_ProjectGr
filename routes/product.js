@@ -5,7 +5,8 @@ const { requireSignIn } = require("../controllers/auth");
 const { checkRole } = require("../controllers/auth");
 const router = express.Router();
 
-router.get('/product', controllersProduct.allProducts);
+router.get('/products', controllersProduct.allProducts);
+router.get('/product', controllersProduct.searchProducts);
 router.get('/product/:productID', controllersProduct.getProductById);
 router.post('/product',verifyAccessTokenCookie, controllersProduct.addProduct);
 router.put('/product/:productID',verifyAccessTokenCookie, controllersProduct.updateProduct);

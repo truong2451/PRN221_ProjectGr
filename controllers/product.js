@@ -49,6 +49,35 @@ exports.allProducts = async (req, res) => {
   }
 };
 
+//search product theo tên
+exports.searchProducts = async (req, res) => {
+  try {
+    const { keyword, page, perPage } = req.query;
+    const currentPage = parseInt(page) || 1;
+    const itemsPerPage = parseInt(perPage) || 10;
+    let totalItems;
+
+    const regex = new RegExp(keyword, 'i');
+
+    const countDocuments = await Product.find({ productName: regex }).countDocuments();
+    totalItems = countDocuments;
+
+    const products = await Product.find({ productName: regex })
+      .skip((currentPage - 1) * itemsPerPage)
+      .limit(itemsPerPage)
+      .sort({ created: -1 });
+
+    res.status(200).json({
+      totalPage: Math.ceil(totalItems / itemsPerPage),
+      totalItems,
+      perPage: itemsPerPage,
+      currentPage,
+      list: products
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to search products', errorMessage: error.message });
+  }
+};
 
 //addProduct
 exports.addProduct = async (req, res) => {
