@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Order = require("../models/order");
+const OrderDetail = require("../models/orderDetail");
 const mongoose = require("mongoose");
 
 //get all order
@@ -40,7 +41,10 @@ exports.getOrderById = async (req, res) => {
             return res.status(404).json({ error: "Order not found" });
         }
 
-        res.status(200).json({ order });
+        const orderDetails = await OrderDetail.find({ orderID: orderId });
+
+
+        res.status(200).json({ order,orderDetails });
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch order", errorMessage: error.message });
     }
